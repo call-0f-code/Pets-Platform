@@ -1,0 +1,98 @@
+.VetBody {
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #fdfbfb, #ebedee);
+    min-height: 100vh;
+}
+
+.VetBody-Head {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.VetBody-Head h1 {
+    font-size: 32px;
+    color: #333;
+}
+
+.VetBody-Head p {
+    color: #666;
+    margin-top: 10px;
+}
+
+.vet-btn {
+    display: block;
+    margin: 0 auto 30px auto;
+    padding: 12px 24px;
+    background: #ff7f9c;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.vet-btn:hover {
+    background: #ff5c80;
+    transform: scale(1.05);
+}
+
+.Vet-section {
+    display: flex;
+    gap: 25px;
+    align-items: flex-start;
+    padding: 10px;
+}
+
+.Vet-section-map {
+    width: 60%;
+    height: 500px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    position: sticky;
+    top: 20px;
+}
+
+.Vet-section-data {
+    width: 40%;
+    max-height: 500px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.vet-card {
+    background: #ffffff;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+.vet-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    background: #fff5f8;
+}
+
+.vet-card h3 {
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.vet-card p {
+    font-size: 14px;
+    color: #555;
+    margin: 5px 0;
+}
+
+.opening_hrs {
+    color: #ff7f9c;
+    font-weight: 500;
+}
+
+.Vet-section-data h2 {
+    text-align: center;
+    color: #777;
+}
