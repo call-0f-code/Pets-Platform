@@ -1,23 +1,31 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
-const petSchema = new mongoose.Schema({
-  owner_id: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+const petSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    type: {
+      type: String, 
+      required: true,
+    },
+    breed: String,
+    age: Number,
+    gender: {
+      type: String,
+      enum: ["male", "female"],
+    },
+    description: String,
+    image: String, 
 
-  name: String,
-  species: String,
-  breed: String,
-  dob: Date,
-  gender: String,
-  weight: Number,
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
 
-  allergies: Array,
-  medical_conditions: Array,
-  vaccinations: Array,
-  medical_records: Array,
-  weight_history: Array,
-  reminders: Array,
-
-  image_url: String
-}, { timestamps: true });
-
-module.exports = mongoose.model("Pet", petSchema);
+export default mongoose.model("Pet", petSchema);

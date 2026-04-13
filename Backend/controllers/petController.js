@@ -1,0 +1,64 @@
+import Pet from "../models/Pet.js";
+import User from "../models/User.js";
+
+//CREATE PET
+export const createPet = async (req, res) => {
+  try {
+    const { name, type, breed, age } = req.body;
+
+    const pet = await Pet.create({
+      name,
+      type,
+      breed,
+      age,
+      owner: req.user.id,
+    });
+
+    // await User.findByIdAndUpdate(req.user.id, {
+    //   $push: { pets: pet._id },
+    // });
+
+    res.status(201).json(pet);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// GET MY PETS
+export const getMyPets = async (req, res) => {
+  try {
+    const pets = await Pet.find({ owner: req.user.id });
+    res.json(pets);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// UPDATE PET
+export const updatePet = async (req, res) => {
+  try {
+    const pet = await Pet.findOneAndUpdate(
+      { _id: req.params.id, owner: req.user.id },
+      req.body,
+      { new: true }
+    );
+
+    res.json(pet);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// DELETE PET
+export const deletePet = async (req, res) => {
+  try {
+    await Pet.findOneAndDelete({
+      _id: req.params.id,
+      owner: req.user.id,
+    });
+
+    res.json({ msg: "Pet deleted" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
