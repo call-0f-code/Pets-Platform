@@ -1,5 +1,6 @@
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
+// import crypto from "crypto";
 import jwt from "jsonwebtoken";
 
 //SIGNUP
@@ -14,13 +15,16 @@ export const signup = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    await User.create({
+    const user = await User.create({
       name,
       email,
       password: hashedPassword,
     });
 
+    console.log("USER SAVED:", user);
+
     res.status(201).json({ msg: "User registered" });
+
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

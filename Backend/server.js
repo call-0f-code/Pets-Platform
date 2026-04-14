@@ -1,6 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-import connectDB from "./config/database.js";
+import  connectDB  from "./config/database.js";
 import authRoutes from "./routes/authRouter.js";
 import profileRoutes from "./routes/profileRouter.js";
 import petRoutes from "./routes/petRoutes.js";

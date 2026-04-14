@@ -10,7 +10,6 @@ const petSchema = new mongoose.Schema(
       type: String, 
       required: true,
     },
-    breed: String,
     age: Number,
     gender: {
       type: String,

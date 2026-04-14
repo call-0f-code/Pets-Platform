@@ -1,3 +1,4 @@
+//models/User.js
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
@@ -14,6 +15,9 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  pets: [
+    { type: mongoose.Schema.Types.ObjectId,
+     ref: "Pet" }]
 }, { timestamps: true });
 
 export default mongoose.model("User", userSchema);

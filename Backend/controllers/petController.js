@@ -13,11 +13,9 @@ export const createPet = async (req, res) => {
       age,
       owner: req.user.id,
     });
-
-    // await User.findByIdAndUpdate(req.user.id, {
-    //   $push: { pets: pet._id },
-    // });
-
+    await User.findByIdAndUpdate(req.user.id, {
+      $push: { pets: pet._id }
+    });
     res.status(201).json(pet);
   } catch (err) {
     res.status(500).json({ error: err.message });

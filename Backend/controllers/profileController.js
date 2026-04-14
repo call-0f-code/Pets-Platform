@@ -4,15 +4,13 @@ import Pet from "../models/Pet.js";
 // GET PROFILE
 export const getProfile = async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select("-password");
-
-    const pets = await Pet.find({ owner: req.user.id });
-
-    res.json({
+    const user = await User.findById(req.user.id)
+      .select("-password")
+      .populate("pets");
+    res.json(
       user,
-      pets
-    });
-
+      // pets: user.pets,
+    );
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -26,7 +24,7 @@ export const updateProfile = async (req, res) => {
     const updatedUser = await User.findByIdAndUpdate(
       req.user.id,
       { name, email },
-      { new: true }
+      { new: true },
     ).select("-password");
 
     res.json(updatedUser);
