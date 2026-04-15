@@ -1,0 +1,17 @@
+import express from "express";
+import {
+  getProfile,
+  updateProfile,
+  deleteProfile,
+} from "../controllers/profileController.js";
+
+import authMiddleware from "../middleware/authMiddleware.js";
+
+const router = express.Router();
+
+// PROFILE ROUTES
+router.get("/", authMiddleware, getProfile);
+router.put("/", authMiddleware, updateProfile);
+router.delete("/", authMiddleware, deleteProfile);
+
+export default router;
