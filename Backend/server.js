@@ -4,6 +4,7 @@ import  connectDB  from "./config/database.js";
 import authRoutes from "./routes/authRouter.js";
 import profileRoutes from "./routes/profileRouter.js";
 import petRoutes from "./routes/petRoutes.js";
+import chatRoutes from "./routes/chatRoutes.js";
 
 dotenv.config();
 
@@ -19,7 +20,7 @@ connectDB();
 app.use("/api/auth", authRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/pets", petRoutes);
-
+app.use("/api/chat", chatRoutes);
 
 app.get("/", (req, res) => {
   res.send("API Running");
