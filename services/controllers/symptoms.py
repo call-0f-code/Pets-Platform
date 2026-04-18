@@ -25,27 +25,35 @@ SYSTEM_PROMPT = {
     4. Whether vet visit is needed"""
 }
 def check_symptoms(session_id, user_id, message):
-    # print("start")
-    history=load_history(session_id, user_id)
-    # print("history loaded")
+    try:
+        # print("start")
+        history=load_history(session_id, user_id)
+        # print("history loaded")
 
 
-    # print("BEFORE CALL")
-    msg=[SYSTEM_PROMPT]+history+[{"role":"user", "content":message}]
-    responce=client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
-        messages=msg
-    )
-    # print("AFTER CALL")
-    # print("respoce received")
+        # print("BEFORE CALL")
+        msg=[SYSTEM_PROMPT]+history+[{"role":"user", "content":message}]
+        responce=client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=msg
+        )
+        # print("AFTER CALL")
+        # print("respoce received")
 
-    reply=responce.choices[0].message.content
-    save_message(session_id,user_id, "user", message)
-    # print("USER MSG SAVED")
-    save_message(session_id,user_id, "assistant", reply)
-    # print("ASSISTANT MSG SAVED")
+        reply=responce.choices[0].message.content
+        save_message(session_id,user_id, "user", message)
+        # print("USER MSG SAVED")
+        save_message(session_id,user_id, "assistant", reply)
+        # print("ASSISTANT MSG SAVED")
 
-    return reply
+        return reply
+    except Exception as e:
+        print("error in check symtoms",e)
+        return "something went wrong, try again."
+
+
+
+
 
 
 

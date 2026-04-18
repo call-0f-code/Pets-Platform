@@ -5,7 +5,9 @@ import authRoutes from "./routes/authRouter.js";
 import profileRoutes from "./routes/profileRouter.js";
 import petRoutes from "./routes/petRoutes.js";
 import chatRoutes from "./routes/chatRoutes.js";
-
+import dietRouter from "./routes/dietRouter.js"
+import healthRouter from "./routes/healthRouter.js"
+// import {  from "./controllers/healthController.js";
 dotenv.config();
 
 const app = express();
@@ -21,6 +23,9 @@ app.use("/api/auth", authRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/pets", petRoutes);
 app.use("/api/chat", chatRoutes);
+app.use("/api/diet_plan", dietRouter);
+app.use("/api/healthIn", healthRouter);
+
 
 app.get("/", (req, res) => {
   res.send("API Running");

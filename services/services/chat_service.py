@@ -17,31 +17,35 @@ from datetime import datetime
 #     })
 
 def save_message(session_id,user_id, role, content):
-    db=get_db()
-    collection=db['chat_history']
-    # count=collection.count_documents({"session_id"})
-    # if count>=20:
-    #     collection.delete_one({"created_at", 1})
+    try:
+        db=get_db()
+        collection=db['chat_history']
+        # count=collection.count_documents({"session_id"})
+        # if count>=20:
+        #     collection.delete_one({"created_at", 1})
 
-    collection.insert_one({
-        "session_id":session_id,
-        "user_id":user_id,
-        "role":role,
-        "content":content,
-        "created_at":datetime.now()
-    })
+        collection.insert_one({
+            "session_id":session_id,
+            "user_id":user_id,
+            "role":role,
+            "content":content,
+            "created_at":datetime.now()
+        })
 
 
-    count=collection.count_documents({"session_id":session_id, "user_id":user_id})
-    if count>20:
-        lim =count-20
-        old=collection.find({
-            "session_id":session_id, "user_id":user_id},
-            sort=[("created_at",1)],
-            limit=lim)
+        count=collection.count_documents({"session_id":session_id, "user_id":user_id})
+        if count>20:
+            lim =count-20
+            old=collection.find({
+                "session_id":session_id, "user_id":user_id},
+                sort=[("created_at",1)],
+                limit=lim)
+            
+            for d in old:
+                collection.delete_one({"_id":d["_id"]})
+    except Exception as e:
+        print("error while saving messages")
         
-        for d in old:
-            collection.delete_one({"_id":d["_id"]})
 
 # for i in range (20):
 
@@ -56,26 +60,28 @@ def save_message(session_id,user_id, role, content):
 
 
 def load_history(session_id, user_id):
-    db=get_db()
-    collection=db["chat_history"]
-    messages=collection.find({
-        "session_id":session_id,
-        "user_id":user_id
-    }, 
-    sort=[("created_at", 1)],
-    limit=20
-    )
+    try:
+        db=get_db()
+        collection=db["chat_history"]
+        messages=collection.find({
+            "session_id":session_id,
+            "user_id":user_id
+        }, 
+        sort=[("created_at", 1)],
+        limit=20
+        )
 
-    history=[]
-    for m in messages:
-        history.append({
-            "role": m["role"],
-            "content": m["content"]
-        })
+        history=[]
+        for m in messages:
+            history.append({
+                "role": m["role"],
+                "content": m["content"]
+            })
 
-    return history
-
-    
+        return history
+    except Exception as e:
+        print("error while loading history")
+        return []    
 
     # print (history)
 
