@@ -1,0 +1,36 @@
+.footer {
+    width: 100%;
+    background: rgba(255, 105, 150, 0.15);
+    margin-top: 15px;
+    padding: 30px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.footer-logo h1 {
+    font-size: 45px;
+    color: #bda248;
+    text-shadow: 2px 1px black;
+    font-family: cursive;
+}
+
+.footer-pages {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-pages li {
+    margin-bottom: 8px;
+}
+
+.footer-pages a {
+    text-decoration: none;
+    color: black;
+    font-size: 14px;
+}
+
+.footer-pages a:hover {
+    text-decoration: underline;
+}
