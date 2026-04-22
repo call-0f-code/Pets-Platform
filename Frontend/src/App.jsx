@@ -1,32 +1,21 @@
-import './App.css'
-import LandingPage from './pages/LandingPage'
-import Dashboard from './pages/Dashboard'
-import VetFinder from './pages/VetFinder'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-
-
-function App() {
-
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <LandingPage />
-    },
-    {
-      path: "/dashboard",
-      element: <Dashboard />
-    },
-    {
-      path: "/vet-finder",
-      element: <VetFinder />
-    }
-  ])
-
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import UserProfile from "./pages/UserProfile";
+import PetProfile from "./pages/PetProfile";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+export default function App() {
   return (
-    <>
-      <RouterProvider router={router} />
-    </>
-  )
+    <BrowserRouter>
+      <Routes>
+      
+        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/profile" element={<UserProfile />} />
+        <Route path="/pet/:id" element={<PetProfile />} />
+        <Route path="*" element={<Navigate to="/login" replace />} />
+            
+        </Routes>
+    </BrowserRouter>
+  );
 }
-
-export default App
