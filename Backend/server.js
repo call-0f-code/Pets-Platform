@@ -1,16 +1,20 @@
 import express from "express";
 import dotenv from "dotenv";
 import  connectDB  from "./config/database.js";
+import cors from "cors";
 import authRoutes from "./routes/authRouter.js";
 import profileRoutes from "./routes/profileRouter.js";
 import petRoutes from "./routes/petRoutes.js";
+import CommunityFeedRoute from "./routes/CommunityFeed.js";
+import documentRoutes from "./routes/documentRoutes.js";
 
 dotenv.config();
 
 const app = express();
 
-// middleware
 app.use(express.json());
+
+app.use(cors());
 
 
 connectDB();
@@ -19,6 +23,8 @@ connectDB();
 app.use("/api/auth", authRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/pets", petRoutes);
+app.use("/api/community", CommunityFeedRoute);
+app.use("/api/documents", documentRoutes);
 
 
 app.get("/", (req, res) => {

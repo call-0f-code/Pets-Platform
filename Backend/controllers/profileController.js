@@ -4,7 +4,7 @@ import Pet from "../models/Pet.js";
 // GET PROFILE
 export const getProfile = async (req, res) => {
   try {
-    const user = await User.findById(req.user.id)
+    const user = await User.findById(req.userId)
       .select("-password")
       .populate("pets");
     res.json(
@@ -22,7 +22,7 @@ export const updateProfile = async (req, res) => {
     const { name, email } = req.body;
 
     const updatedUser = await User.findByIdAndUpdate(
-      req.user.id,
+      req.userId,
       { name, email },
       { new: true },
     ).select("-password");
@@ -36,7 +36,7 @@ export const updateProfile = async (req, res) => {
 // DELETE PROFILE
 export const deleteProfile = async (req, res) => {
   try {
-    await User.findByIdAndDelete(req.user.id);
+    await User.findByIdAndDelete(req.userId);
     res.json({ msg: "User deleted successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });
