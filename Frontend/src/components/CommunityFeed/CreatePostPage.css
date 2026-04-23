@@ -1,0 +1,82 @@
+/* 🌿 Page layout */
+.create-post-page {
+  background: #f5f7fb;
+  min-height: 100vh;
+}
+
+/* 📦 Form container */
+.create-post {
+  max-width: 500px;
+  margin: 40px auto;
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 10px 10px 12px rgba(216, 38, 186, 0.08);
+}
+
+/* 📝 Form layout */
+.create-post form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* 📌 Labels (text before inputs) */
+.create-post form {
+  font-size: 14px;
+  color: #444;
+  font-weight: 500;
+}
+
+/* 📂 File input */
+.create-post input[type="file"] {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fafafa;
+  cursor: pointer;
+}
+
+/* ✍️ Textarea */
+.create-post textarea {
+  resize: none;
+  height: 80px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  outline: none;
+  font-size: 14px;
+  background: #fafafa;
+}
+
+/* ✨ Focus effect */
+.create-post textarea:focus,
+.create-post input:focus {
+  border-color: #6c9eff;
+  background: #fff;
+}
+
+/* 🚀 Submit button */
+.create-post button {
+  margin-top: 10px;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #6c9eff, #4a7cff);
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* 🔥 Hover effect */
+.create-post button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(108, 158, 255, 0.4);
+}
+
+/* 🖱️ Click effect */
+.create-post button:active {
+  transform: scale(0.97);
+}

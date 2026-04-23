@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getPetById, updatePet } from "../services/api";
+import { getPetById, updatePet } from "../services/api.js";
 import TagInput from "../components/TagInput";
 import ScheduleSection from "../components/ScheduleSection";
 import EmergencyContact from "../components/EmergencyContact";
 import FavouritesSection from "../components/FavouritesSection.jsx";
-import HealthRecords from "../components/HealthRecords";
-
 
 const PET_EMOJIS = {
   Dog: "🐶",
@@ -154,103 +152,85 @@ export default function PetProfile() {
         )}
       </nav>
 
-     <div className="w-full px-6 py-8 flex flex-col gap-6">
-  {/* HERO HEADER */}
-  <div className="bg-[#2F2926] rounded-3xl p-6 flex items-center gap-5">
-    <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[#749EA1] to-[#DBBC97] flex items-center justify-center text-5xl border-4 border-[#B22026] flex-shrink-0">
-      {pet.image ? (
-        <img
-          src={pet.image}
-          alt={pet.name}
-          className="w-full h-full rounded-full object-cover"
+      <div className="max-w-2xl mx-auto px-4 py-8 flex flex-col gap-5">
+        {/* HERO HEADER */}
+        <div className="bg-[#2F2926] rounded-3xl p-6 flex items-center gap-5">
+          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[#749EA1] to-[#DBBC97] flex items-center justify-center text-5xl border-4 border-[#B22026] flex-shrink-0">
+            {pet.image ? (
+              <img
+                src={pet.image}
+                alt={pet.name}
+                className="w-full h-full rounded-full object-cover"
+              />
+            ) : (
+              emoji
+            )}
+          </div>
+          <div>
+            <h1 className="font-playfair text-[#E9DBBD] text-3xl font-bold leading-tight">
+              {pet.name}
+            </h1>
+            <p className="text-[#DBBC97] text-sm mt-0.5">
+              {pet.breed || pet.type}
+            </p>
+            <div className="flex flex-wrap gap-2 mt-3">
+              {pet.type && (
+                <span className="bg-[#749EA1]/20 text-[#749EA1] border border-[#749EA1]/40 rounded-full px-3 py-1 text-xs font-bold">
+                  {pet.type}
+                </span>
+              )}
+              {pet.age > 0 && (
+                <span className="bg-[#749EA1]/20 text-[#749EA1] border border-[#749EA1]/40 rounded-full px-3 py-1 text-xs font-bold">
+                  {pet.age} yr{pet.age !== 1 ? "s" : ""}
+                </span>
+              )}
+              {pet.gender && (
+                <span className="bg-[#749EA1]/20 text-[#749EA1] border border-[#749EA1]/40 rounded-full px-3 py-1 text-xs font-bold capitalize">
+                  {pet.gender === "male" ? "♂" : "♀"} {pet.gender}
+                </span>
+              )}
+            </div>
+            {pet.description && (
+              <p className="text-[#E9DBBD]/60 text-xs mt-2 italic">
+                "{pet.description}"
+              </p>
+            )}
+          </div>
+        </div>
+
+        {/* EMERGENCY CONTACT */}
+        <EmergencyContact
+          contact={pet.emergencyContact || {}}
+          onSave={(data) => save({ emergencyContact: data })}
         />
-      ) : (
-        emoji
-      )}
-    </div>
 
-    <div>
-      <h1 className="font-playfair text-[#E9DBBD] text-3xl font-bold leading-tight">
-        {pet.name}
-      </h1>
-      <p className="text-[#DBBC97] text-sm mt-0.5">
-        {pet.breed || pet.type}
-      </p>
+        {/* FAVOURITES */}
+        <FavouritesSection
+          favourites={pet.favourites || {}}
+          onUpdate={(data) => save({ favourites: data })}
+        />
 
-      <div className="flex flex-wrap gap-2 mt-3">
-        {pet.type && (
-          <span className="bg-[#749EA1]/20 text-[#749EA1] border border-[#749EA1]/40 rounded-full px-3 py-1 text-xs font-bold">
-            {pet.type}
-          </span>
-        )}
-        {pet.age > 0 && (
-          <span className="bg-[#749EA1]/20 text-[#749EA1] border border-[#749EA1]/40 rounded-full px-3 py-1 text-xs font-bold">
-            {pet.age} yr{pet.age !== 1 ? "s" : ""}
-          </span>
-        )}
-        {pet.gender && (
-          <span className="bg-[#749EA1]/20 text-[#749EA1] border border-[#749EA1]/40 rounded-full px-3 py-1 text-xs font-bold capitalize">
-            {pet.gender === "male" ? "♂" : "♀"} {pet.gender}
-          </span>
-        )}
+        {/* ALLERGIES */}
+        <SectionCard title="Allergies" icon="⚠️">
+          <TagInput
+            tags={pet.allergies || []}
+            onAdd={(val) => addTag("allergies", null, val)}
+            onRemove={(i) => removeTag("allergies", null, i)}
+            color="allergy"
+          />
+          {(pet.allergies?.length || 0) === 0 && (
+            <p className="text-xs text-[#2F2926]/40 mt-2">
+              No allergies noted. Add one if needed.
+            </p>
+          )}
+        </SectionCard>
+
+        {/* SCHEDULE */}
+        <ScheduleSection
+          schedule={pet.schedule || []}
+          onUpdate={(newSchedule) => save({ schedule: newSchedule })}
+        />
       </div>
-
-      {pet.description && (
-        <p className="text-[#E9DBBD]/60 text-xs mt-2 italic">
-          "{pet.description}"
-        </p>
-      )}
-    </div>
-  </div>
-
-  {/* EMERGENCY + ALLERGIES (ROW) */}
-<div className="w-flex justify">
-  <div className="w-full max-w-full flex flex-row gap-5">
-
-    {/* Emergency Contact - 60% */}
-    <div className="w-[60%]">
-      <EmergencyContact
-        contact={pet.emergencyContact || {}}
-        onSave={(data) => save({ emergencyContact: data })}
-      />
-    </div>
-
-    {/* Allergies - 40% */}
-    <div className="w-[40%]">
-      <SectionCard title="Allergies" icon="⚠️">
-        <TagInput
-          tags={pet.allergies || []}
-          onAdd={(val) => addTag("allergies", null, val)}
-          onRemove={(i) => removeTag("allergies", null, i)}
-          color="allergy"
-        />
-        {(pet.allergies?.length || 0) === 0 && (
-          <p className="text-xs text-[#2F2926]/40 mt-2">
-            No allergies noted. Add one if needed.
-          </p>
-        )}
-      </SectionCard>
-    </div>
-
-  </div>
-</div>
-
-  {/* FAVOURITES + SCHEDULE (COLUMN) */}
-  <div className="flex flex-col gap-5">
-    <FavouritesSection
-      favourites={pet.favourites || {}}
-      onUpdate={(data) => save({ favourites: data })}
-    />
-
-    <ScheduleSection
-      schedule={pet.schedule || []}
-      onUpdate={(newSchedule) => save({ schedule: newSchedule })}
-    />
-    <HealthRecords petId={id} />
-
-  </div>
-
-</div>
     </div>
   );
 }

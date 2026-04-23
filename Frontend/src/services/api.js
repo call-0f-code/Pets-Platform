@@ -1,6 +1,5 @@
-
 import axios from "axios";
-const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:8002";
+const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 
 const API = axios.create({
@@ -29,4 +28,3 @@ export const updatePet = (id, data) => API.put(`/pets/${id}`, data);
 export const deletePet = (id) => API.delete(`/pets/${id}`);
  
 export default API;
- 

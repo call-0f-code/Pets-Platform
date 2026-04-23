@@ -187,6 +187,23 @@ export default function UserProfile() {
             </div>
           </div>
         )}
+
+        {/* POSTS ACTION BUTTONS */}
+        <div className="flex gap-3 mt-6">
+        <button
+            onClick={() => navigate("/create-post")}
+            className="flex-1 bg-[#B22026] text-white text-sm font-bold py-2 rounded-xl hover:bg-[#8f1a1e] transition"
+        >
+            ➕ Create Post
+        </button>
+
+        <button
+            onClick={() => navigate("/my-posts")}
+            className="flex-1 bg-white border-2 border-[#DBBC97] text-[#2F2926] text-sm font-bold py-2 rounded-xl hover:bg-[#E9DBBD] transition"
+        >
+            🖼️ My Posts
+        </button>
+        </div>
       </div>
 
       {showModal && (
