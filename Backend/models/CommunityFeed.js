@@ -1,21 +1,53 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const communityFeedSchema = new mongoose.Schema({
-  author_id: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-  pet_id: { type: mongoose.Schema.Types.ObjectId, ref: "Pet" },
+  author_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true
+  },
 
-  content: String,
-  images: Array,
-  hashtags: Array,
+  pet_id: { 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: "Pet" 
+  },
 
-  location: Object,
-  contact_info: String,
+  content: {
+    type: String,
+    trim: true
+  },
 
-  status: String,
-  like_count: { type: Number, default: 0 },
-  share_count: { type: Number, default: 0 },
+  images: [
+    {
+      url: String,
+    }
+  ],
 
-  comments: Array
+  hashtags: [
+    {
+      type: String,
+      lowercase: true,
+    }
+  ],
+
+  location: {
+    name: String,
+  },
+
+  likes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    }
+  ],
+
+  like_count: {
+    type: Number,
+    default: 0,
+  },
+  
 }, { timestamps: true });
 
-module.exports = mongoose.model("CommunityFeed", communityFeedSchema);
+const CommunityFeed = mongoose.model("CommunityFeed", communityFeedSchema);
+
+export default CommunityFeed;
